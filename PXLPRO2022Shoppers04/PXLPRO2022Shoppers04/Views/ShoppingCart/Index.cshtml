@@ -1,0 +1,261 @@
+﻿@using PXLPRO2022Shoppers04.Data.Default
+@using PXLPRO2022Shoppers04.Helpers
+@using PXLPRO2022Shoppers04.TagHelpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model PXLPRO2022Shoppers04.ViewModels.ShoppingcartInfoViewModel
+
+<main class="page">
+    <section class="shopping-cart dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="font-weight-bold">Shopping Cart</h2>
+            </div>
+            <div class="content">
+                <div class="row w-100">
+                    <div>
+                        <div class="items">
+                            @if (Model != null && Model.CartItems.Any())
+                            {
+                                @foreach (var product in Model.CartItems)
+                                {
+                                    <div class="product">
+                                        <div class="row w-100">
+                                            <div class="col-md-3 mt-auto mb-auto">
+                                                <img class="img-fluid mx-auto d-block image" src="@product.Product.ImageLink">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="info">
+                                                    <div class="row">
+                                                        <div class="col-md-5 product-name">
+                                                            <div class="product-name">
+                                                                <a asp-action="Details" asp-controller="Product" asp-route-id="@product.Product.ProductId">@product.Product.Name</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 quantity">
+                                                            <label class="d-flex quantity-title" for="quantity">Quantity:</label>
+                                                            <form class="d-flex" asp-action="QuantityChange" asp-route-id="@product.ProductId">
+                                                                <input min="1" max="@APIHelper.GetStockOfProduct(product.Product.SSN).Result.Amount" type="number" name="quantity" value="@product.Quantity" class="form-control quantity-input">
+                                                                <button type="submit" class="changeQuantitySubmitBtn"></button>
+                                                            </form>
+                                                            <form asp-action="RemoveFromCart" asp-controller="Product" asp-route-id="@product.ProductId">
+                                                                <button type="submit" class="btn btn-danger removeBtn">Remove</button>
+                                                            </form>
+                                                        </div>
+                                                        <div class="col-md-3 price">
+                                                            <span>€ <calc-price price="@product.Product.Price" quantity="@product.Quantity"></calc-price></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <h5 class="p-5 w-100">No products added yet.</h5>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column w-100 mt-3 summaryContainer">
+                        <div class="summary">
+                            <h3>Summary</h3>
+                            <div class="summary-item"><span class="text">Total</span><span class="price">€ <calc-total-price-for-cart items="@Model.CartItems"></calc-total-price-for-cart></span></div>
+                            @if (@Model.CartItems.Any())
+                            {
+                                <a asp-area="" asp-controller="Order" asp-action="Details" class="btn cart-nav-btn">Go to checkout</a>   
+                            }
+                            <!--Stripe checkout -->
+                            @*<form action="/create-checkout-session" method="POST">
+                                <button type="submit">Checkout</button>
+                                </form>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<style scoped>
+.summaryContainer{
+margin-bottom: -25px;
+}
+    .form {
+        width: 100%
+    }
+
+    .formstyle {
+        margin-right: 35px;
+    }
+
+    body {
+        background: url(https://ak.picdn.net/shutterstock/videos/19451212/thumb/1.jpg?ip=x480);
+    }
+
+    .shopping-cart {
+        padding-bottom: 50px;
+        font-family: 'Montserrat', sans-serif;
+        padding: 3%;
+        margin-top: 3%;
+        margin-bottom: 5%;
+        margin-left: 15%;
+        margin-right: 15%;
+        border-radius: 0.5rem;
+        background: #fff;
+        
+    }
+
+        .shopping-cart.dark {
+            background: url(https://ak.picdn.net/shutterstock/videos/19451212/thumb/1.jpg?ip=x480);
+        }
+
+        .shopping-cart .content {
+            box-shadow: 0px 2px 10px rgb(0 0 0 / 8%);
+            background-color: white;
+            padding-left: 28px;
+            padding-bottom: 30px;
+            border-radius: 5px;
+            border-radius: 9px;
+        }
+
+        .shopping-cart .block-heading {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+            .shopping-cart .block-heading p {
+                text-align: center;
+                max-width: 420px;
+                margin: auto;
+                opacity: 0.7;
+            }
+
+        .shopping-cart .dark .block-heading p {
+            opacity: 0.8;
+        }
+
+        .shopping-cart .block-heading h1,
+        .shopping-cart .block-heading h2,
+        .shopping-cart .block-heading h3 {
+            margin-bottom: 1.2rem;
+            color: white;
+        }
+
+        .shopping-cart .items {
+            margin: auto;
+        }
+
+            .shopping-cart .items .product {
+                margin-bottom: 20px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+
+                .shopping-cart .items .product .info {
+                    padding-top: 0px;
+                    text-align: center;
+                }
+
+                    .shopping-cart .items .product .info .product-name {
+                        font-weight: 600;
+                        margin-top: 35px;
+                    }
+
+    .shopping-cart .items .product .info .product-name .product-info {
+        font-size: 14px;
+        margin-top: 15px;
+    }
+
+    .shopping-cart .items .product .info .product-name .product-info .value {
+        font-weight: 400;
+    }
+
+    .shopping-cart .items .product .info .quantity .quantity-title{
+        margin-top: 25px;
+    }
+
+    .shopping-cart .items .product .info .quantity .quantity-input {
+        
+        width: 80px;
+    }
+
+    .shopping-cart .items .product .info .price {
+        margin-top: 45px;
+        font-weight: bold;
+        font-size: 22px;
+    }
+
+    .shopping-cart .summary {
+        border-top: 2px solid #917abc;
+        background-color: #FAF6FF;
+        height: 100%;
+        padding: 30px;
+        padding-top:5px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+    }
+
+        .shopping-cart .summary h3 {
+            font-size: 1.3em;
+            font-weight: 600;
+            padding-top: 20px;
+            padding-bottom: 20px;           
+        }
+
+        .shopping-cart .summary .summary-item:not(:last-of-type) {
+            padding-bottom: 10px;
+            padding-top: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .shopping-cart .summary .text {
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        .shopping-cart .summary .price {
+            font-size: 1em;
+            margin-left: 20px;
+        }
+
+        .shopping-cart .summary button {
+            margin-top: 20px;
+        }
+
+    .changeQuantitySubmitBtn {
+        width: 35px;
+        height: 35px;
+        outline: none;
+        border: none;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-image: url("https://img.myloview.cz/plakaty/check-mark-check-list-icon-vector-design-template-400-222428279.jpg");
+    }
+
+    .removeBtn {
+        justify-content: start;
+        display: flex;
+        margin-top: 5px;
+        font-size: 13px;
+        width: 80px;
+    }
+
+    .product-name {
+        textcolor: black;
+    }
+
+    .cart-nav-btn {
+        border: none;
+        border-radius: 1.5rem;
+        width: 25%;
+        margin-left: 35%;
+        padding: 1%;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        background: black;
+    }
+</style>

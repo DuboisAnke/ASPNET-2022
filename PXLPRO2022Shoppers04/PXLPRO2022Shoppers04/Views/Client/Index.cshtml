@@ -1,0 +1,224 @@
+﻿@model PXLPRO2022Shoppers04.ViewModels.ClientInfoViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="profile-container emp-profile">
+    <div class="row">
+        <div class="col">
+            <div class="profile-head">
+                <h5 class="d-flex profile-head-content">
+                    <label class="font-weight-bold mr-2">Welcome</label>
+                    <p>@Model.Client.FullName</p>
+                </h5>
+                <h6>
+                </h6>
+
+                <div id="exTab1" class="tab-container">
+                    <ul class="nav nav-pills font-weight-bold">
+                        <li class="active tab-style">
+                            <a href="#1a" data-toggle="tab">About</a>
+                        </li>
+                        <li class="tab-style">
+                            <a href="#2a" data-toggle="tab">Addresses</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content clearfix">
+                        <!--About section-->
+                        <div class="tab-pane active" id="1a">
+
+                            <div class="col">
+                                <form asp-action="Edit" asp-route-id="@Model.Client.ClientId" method="post" class="form-body mt-3">
+                                    <div class="form-group">
+                                        <label class="formtitle">Last name</label>
+                                        <input disabled asp-for="@Model.Client.Name" class="form-control" />
+                                        <span asp-validation-for="@Model.Client.Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="formtitle">First name</label>
+                                        <input disabled asp-for="@Model.Client.FirstName" class="form-control" />
+                                        <span asp-validation-for="@Model.Client.FirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="formtitle">Emailadress</label>
+                                        <input disabled asp-for="@Model.Client.User.Email" class="form-control" />
+                                        <span asp-validation-for="@Model.Client.User.Email" class="text-danger"></span>
+                                    </div>
+                                    @* <div class="form-group">
+                                        <input disabled type="submit" value="Edit profile" class="btn profile-edit-btn"/>
+                                        </div>*@
+                                </form>
+                            </div>
+                        </div>
+
+                        <!--Addresses section-->
+                        <div class="tab-pane" id="2a">
+                            @if (Model.Addresses != null)
+                            {
+                                @foreach (var address in Model.Addresses)
+                                {
+                                    <form asp-action="EditAddress" asp-route-id="@address.AddressId">
+                                        <div class="form-group">
+                                            <label class="formtitle">Streetname</label>
+                                            <input asp-for="@address.StreetName" class="form-control" />
+                                            <span asp-validation-for="@address.StreetName" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="formtitle">Housenumber</label>
+                                            <input asp-for="@address.HouseNumber" class="form-control" />
+                                            <span asp-validation-for="@address.HouseNumber" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="formtitle">ZIP</label>
+                                            <input asp-for="@address.ZIP" class="form-control" />
+                                            <span asp-validation-for="@address.ZIP" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="formtitle">City</label>
+                                            <input asp-for="@address.City" class="form-control" />
+                                            <span asp-validation-for="@address.City" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="formtitle">Country</label>
+                                            <input asp-for="@address.Country" class="form-control" />
+                                            <span asp-validation-for="@address.Country" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Edit address" class="btn profile-edit-btn" />
+                                        </div>
+                                    </form>
+                                }
+                                <p class="text-center mt-5">Want to add another address?</p>
+                                <div class="d-flex justify-content-center">
+                                    <a class="btn address-new-btn" asp-area="" asp-controller="Address" asp-action="CreateAddress">New address</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <p>No addresses added yet</p>
+                                <form asp-action="SaveAddress">
+                                    <div class="form-group">
+                                        <input type="hidden" asp-for="@Model.Client.ClientId" />
+                                        <label class="formtitle">Streetname</label>
+                                        <input asp-for="@Model.Address.StreetName" class="form-control" />
+                                        <span asp-validation-for="@Model.Address.StreetName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="formtitle">Housenumber</label>
+                                        <input asp-for="@Model.Address.HouseNumber" class="form-control" />
+                                        <span asp-validation-for="@Model.Address.HouseNumber" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="formtitle">ZIP</label>
+                                        <input asp-for="@Model.Address.ZIP" class="form-control" />
+                                        <span asp-validation-for="@Model.Address.ZIP" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="formtitle">City</label>
+                                        <input asp-for="@Model.Address.City" class="form-control" />
+                                        <span asp-validation-for="@Model.Address.City" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="formtitle">Country</label>
+                                        <input asp-for="@Model.Address.Country" class="form-control" />
+                                        <span asp-validation-for="@Model.Address.Country" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Add address" class="btn profile-edit-btn" />
+                                    </div>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<style scoped>
+    .btn:hover {
+        background: #917abc;
+        color: white;
+    }
+
+    .formtitle {
+        font-weight: bold;
+    }
+
+    .profile-head-content {
+        margin-left: 5%;
+    }
+
+    .active li {
+        border-bottom: 2px solid black;
+    }
+
+    .nav-pills {
+        margin-left: 5%;
+        margin-right: 5%;
+        border-bottom: 1px solid black;
+        height: 25px;
+    }
+
+    ul li {
+        margin-right: 20px;
+        color: black;
+        list-style: none;
+        margin-bottom: 15px;
+    }
+
+    #exTab1 .nav-pills > li > a {
+        color: black;
+    }
+
+    body {
+        /*background: -webkit-linear-gradient(left, black, lightgrey)*/
+        background: url(https://ak.picdn.net/shutterstock/videos/19451212/thumb/1.jpg?ip=x480);
+    }
+
+    .tab-content {
+        margin-top: 10%;
+    }
+
+    .emp-profile {
+        padding: 3%;
+        margin-top: 3%;
+        margin-bottom: 15%;
+        margin-left: 25%;
+        margin-right: 25%;
+        border-radius: 0.5rem;
+        background: #fff;
+    }
+
+    .profile-edit-btn {
+        border: none;
+        border-radius: 1.5rem;
+        width: 50%;
+        margin-left: 25%;
+        padding: 2%;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        background: black;
+    }
+
+    .address-new-btn {
+        border: none;
+        border-radius: 1.5rem;
+        width: 252px;
+        /* margin-left: 25%; */
+        padding: 2%;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        background: #917abc;
+    }
+
+    .form-body {
+        margin-left: 3%;
+    }
+</style>

@@ -1,0 +1,99 @@
+﻿@model PXLPRO2022Shoppers04.Models.Address
+
+@{
+    ViewData["Title"] = "CreateAddress";
+}
+
+<h6>Add an address</h6>
+<hr />
+<div class="profile-container emp-profile">
+<div class="row">
+    <div class="col">
+        <form asp-action="CreateAddress">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="formtitle">Streetname</label>
+                <input asp-for="StreetName" class="form-control" />
+                <span asp-validation-for="StreetName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="formtitle">Housenumber</label>
+                <input asp-for="HouseNumber" class="form-control" />
+                <span asp-validation-for="HouseNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="formtitle">ZIP-Code</label>
+                <input asp-for="ZIP" class="form-control" />
+                <span asp-validation-for="ZIP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="formtitle">City</label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="formtitle">Country</label>
+                <input asp-for="Country" class="form-control" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add address" class="btn address-new-btn" />
+                </div>
+        </form>
+    </div>
+</div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<style scoped>
+        .formtitle {
+            font-weight: bold;
+        }
+
+        body {
+            /*background: -webkit-linear-gradient(left, black, lightgrey)*/
+            background: url(https://ak.picdn.net/shutterstock/videos/19451212/thumb/1.jpg?ip=x480);
+        }
+
+        .emp-profile {
+            padding: 3%;
+            margin-top: 3%;
+            margin-bottom: 15%;
+            margin-left: 25%;
+            margin-right: 25%;
+            border-radius: 0.5rem;
+            background: #fff;
+        }
+
+        .profile-edit-btn {
+            border: none;
+            border-radius: 1.5rem;
+            width: 50%;
+            margin-left: 25%;
+            padding: 2%;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            background: black;
+        }
+
+        .address-new-btn {
+            border: none;
+            border-radius: 1.5rem;
+            width: 25%;
+            margin-left: 35%;
+            padding: 2%;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            background: #917abc;
+        }
+
+        .form-body {
+            margin-left: 3%;
+        }
+    </style>

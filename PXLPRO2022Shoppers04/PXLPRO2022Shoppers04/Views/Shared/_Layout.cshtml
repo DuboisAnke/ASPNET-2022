@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> _signInManager
+@{
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - Clicks and Kicks</title>
+    <script src="https://kit.fontawesome.com/6a52086692.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="icon" type="image/x-icon" href="~/assets/logo_webshop-transp.png"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <base href="~/" />
+</head>
+<body>
+<vc:navigation></vc:navigation>
+<div>
+    <main role="main">
+        @RenderBody()
+    </main>
+</div>
+ 
+
+<partial name="_Footer"/>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="_framework/blazor.server.js"></script>
+@RenderSection("Scripts", required: false)
+</body>
+</html>
+
+<style>
+    body {
+        background-color: black;
+    }
+    .cart-nav-btn:hover {
+        color: #FAF6FF !important;
+        box-shadow: 0 4px 12px 0 rgb(128 126 142 / 75%), 0 2px 30px 0 rgb(121 119 133 / 15%);
+    }
+</style>
+<style scoped>
+    header,footer {
+        background-color: black;
+        color: white !important; 
+    }
+    .nav-item a,.navbar-brand {
+        color: white;
+    }
+    .nav-item a:hover {
+        color: white;
+    }
+    .dropdown-item {
+        color: black !important;
+    }
+</style>

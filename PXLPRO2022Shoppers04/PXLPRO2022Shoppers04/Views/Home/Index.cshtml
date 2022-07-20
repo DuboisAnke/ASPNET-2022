@@ -1,0 +1,47 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Home Page";
+    
+}
+
+<div>
+    <div class="d-flex justify-content-center mt-8em secondProduct">
+        <div class="productinfocontainer productinfo">
+            <h1>The Ultimate Keyboard</h1>
+            <p>This ultimate keyboard is the best keyboard you can buy.<br/>It offers more options in this price range than most other competitors.</p>
+        </div>
+        <div class="productimg">
+            <img src="assets/logitech810.png"/>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center firstProduct">
+        <div class="productimg">
+            <img src="assets/logitechg840xxl.png"/>
+        </div>
+        <div class="productinfocontainer productinfo">
+            <h1>The Ultimate MousePad</h1>
+            <p>This ultimate MousePad is the best mousepad you can buy.<br/>It offers more quality in this price range than most other competitors.</p>
+        </div>
+    </div>
+</div>
+
+
+<style scoped>
+    .firstProduct {
+        background-color: lightgray;
+    }
+    .secondProduct {
+        background-color: black;
+        color: white;
+    }
+    .firstProduct,.secondProduct {
+        padding: 200px;
+    }
+    img {
+        width: 400px;        
+    }
+    .productinfocontainer {
+        margin: auto 4em;
+    }
+</style>

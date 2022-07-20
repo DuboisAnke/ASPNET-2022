@@ -1,0 +1,319 @@
+﻿@model PXLPRO2022Shoppers04.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<div class="registerContainer">
+    <div class="forms">
+        <div class="form login">
+            <span class="title">Register</span>
+
+            <form asp-action="Register" asp-controller="Account">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                <div class="input-field">
+                    <input asp-for="Firstname" placeholder="Enter your first name">
+                    <i class="uil uil-user"></i>
+                    <span asp-validation-for="Firstname" class="text-danger"></span>
+                </div>
+                <div class="input-field">
+                    <input asp-for="Lastname" placeholder="Enter your last name">
+                    <i class="uil uil-user"></i>
+                    <span asp-validation-for="Lastname" class="text-danger"></span>
+                </div>
+                <div class="input-field">
+                    <input asp-for="UserName" placeholder="Enter your preferred username">
+                    <i class="uil uil-user"></i>
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="input-field">
+                    <input asp-for="Email" placeholder="Enter your email">
+                    <i class="uil uil-envelope"></i>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="input-field">
+                    <input asp-for="Password" type="password" class="password" placeholder="Enter a password">
+                    <i class="uil uil-lock icon"></i>
+                    <i class="uil uil-eye-slash showHidePw"></i>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="input-field button">
+                    <input type="submit" value="Register Now">
+                </div>
+            </form>
+
+            <div class="login-signup">
+                <span class="text">
+                    Already a member?
+                    <a asp-action="Login" class="text signup-link">Login now</a>
+                </span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<style scoped>
+    .alert {
+        margin-top: 20px;
+    }
+
+    .registerContainer {
+         position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+        max-width: 430px;
+        width: 100%;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+
+        .registerContainer .forms {
+            width: 200%;
+            display: flex;
+            height: auto;
+            align-items: center;
+            transition: height 0.4s ease;
+        }
+
+        .registerContainer .form {
+            width: 50%;
+            padding: 30px;
+            border-radius: 12px;
+            background: #fff;
+            transition: margin-left 0.36s ease;
+        }
+
+        .registerContainer.active .login {
+            margin-left: -50%;
+            opacity: 0;
+            transition: margin-left 0.36s ease, opacity 0.3s ease;
+        }
+
+        .registerContainer .signup {
+            opacity: 0;
+            transition: opacity 0.18s ease;
+        }
+
+        .registerContainer.active .signup {
+            opacity: 1;
+            transition: opacity 0.4s ease;
+        }
+
+        .registerContainer.active .forms {
+            height: 600px;
+        }
+
+        .registerContainer .form .title {
+            position: relative;
+            font-size: 27px;
+            font-weight: 600;
+        }
+
+    .form .title::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 3px;
+        width: 30px;
+        background-color: #917abc;
+        border-radius: 25px;
+    }
+
+    .form .input-field {
+        position: relative;
+        height: 50px;
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    .input-field input {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        padding: 0 35px;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        border-bottom: 2px solid #ccc;
+        border-top: 2px solid transparent;
+        transition: border-bottom-color 0.4s ease;
+    }
+
+        .input-field input:is(:focus, :valid) {
+            border-bottom-color: #917abc;
+        }
+
+    .input-field i {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+        font-size: 23px;
+        transition: color 0.4s ease;
+    }
+
+    .input-field input:is(:focus, :valid) ~ i {
+        color: #917abc;
+    }
+
+    .input-field i.icon {
+        left: 0;
+    }
+
+    .input-field i.showHidePw {
+        right: 0;
+        cursor: pointer;
+        padding: 10px;
+    }
+
+    .form .checkbox-text {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .checkbox-text .checkbox-content {
+        display: flex;
+        align-items: center;
+    }
+
+    .checkbox-content input {
+        margin: 0 8px -2px 4px;
+        accent-color: #4070f4;
+    }
+
+    .form .text {
+        color: #333;
+        font-size: 14px;
+    }
+
+    .form a.text {
+        color: #4070f4;
+        text-decoration: none;
+    }
+
+    .form a {
+        text-decoration: none;
+    }
+
+        .form a:hover {
+            text-decoration: underline;
+        }
+
+    .form .button {
+        margin-top: 35px;
+    }
+
+        .form .button input {
+            border: none;
+            color: white;
+            font-size: 17px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            background-color: #9370db;
+            cursor: pointer;
+            transition: all 0.6s ease;
+        }
+
+    .button input:hover {
+        background-color: #ac9fc5;
+    }
+
+    .form .login-signup {
+        margin-top: 30px;
+        text-align: center;
+    }
+</style>
+
+<style scoped>
+    html, body {
+        background: black;
+    }
+
+    .btn {
+        color: white;
+        -ms-border-radius: 10%;
+        border-radius: 10%;
+        background-color: #808080;
+    }
+
+    .fa-facebook {
+        background-color: #4267B2;
+    }
+
+    .fa-google {
+        background-color: #DB4437;
+    }
+
+    .fa-twitter {
+        background-color: #00acee;
+    }
+
+    .fa-discord {
+        background-color: #7289DA;
+    }
+
+    .card {
+        background-color: black;
+        color: white;
+        -ms-border-radius: 25px;
+        border-radius: 25px;
+    }
+
+    hr {
+        border-color: white;
+    }
+</style>
+
+<script>
+    const container = document.querySelector(".container"),
+          pwShowHide = document.querySelectorAll(".showHidePw"),
+          pwFields = document.querySelectorAll(".password"),
+          signup = document.querySelector(".signup-link"),
+          register = document.querySelector(".login-link");
+
+          pwShowHide.forEach(eyeIcon => {
+              eyeIcon.addEventListener("click", () => {
+                  pwFields.forEach(pwField => {
+                      if(pwField.type === "password") {
+                          pwField.type = "text";
+
+                          pwShowHide.forEach(icon => {
+                            icon.classList.replace("uil-eye-slash", "uil-eye");
+                          })
+                        }else {
+                            pwField.type = "password";
+
+                            pwShowHide.forEach(icon => {
+                                icon.classList.replace("uil-eye", "uil-eye-slash");
+                            })
+                        }
+                  })
+              })
+          })
+
+          /*
+          signup.addEventListener("click", () => {
+              container.classList.add("active");
+          })
+
+          register.addEventListener("click", () => {
+            container.classList.remove("active");
+        })
+        */</script>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,82 @@
+﻿@page "/manage/stocklogs"
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using System.Diagnostics
+@using System.Net.Http
+@using System.Text
+@using System.Threading
+@using Newtonsoft.Json
+@using PXLPRO2022Shoppers04_StockAPI.Models
+@using System.Collections.ObjectModel
+@using System.Net
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+<div class="overviewContainer w-50 m-auto">
+    <h4 class="text-center p-2">STOCKLOGS</h4>
+    <table class="table table-dark table-striped">
+        <thead>
+        <tr>
+            <th scope="col">SSN</th>
+            <th scope="col">MESSAGE</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (StockLog sl in StockLogs)
+        {
+            <tr>
+                <td>@sl.SSN</td>
+                <td>@sl.Message</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <div class="form-group mx-sm-3 mb-2">
+            <div class="text-center d-flex w-100 mt-2 dark-bg">
+                <NavLink class="btn btn-secondary w-50 m-auto backbutton" href="/manage/products">Back</NavLink>
+            </div>
+        </div>
+</div>
+
+
+
+@code {
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    public ObservableCollection<StockLog> StockLogs = new ObservableCollection<StockLog>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var client = new HttpClient();
+        var response = await client.GetAsync($"https://localhost:44300/api/stocklog");
+        string res = response.Content.ReadAsStringAsync().Result;
+        StockLogs = JsonConvert.DeserializeObject<ObservableCollection<StockLog>>(res);
+    }
+    private System.Threading.Timer? timer; // NOTE: THIS LINE OF CODE ADDED
+
+    protected override async Task OnParametersSetAsync()
+    {
+        timer = new System.Threading.Timer(async (object? stateInfo) =>
+        {
+            using var client2 = new HttpClient();
+                    var response2 = await client2.GetAsync($"https://localhost:44300/api/stocklog");
+                    string res2 = response2.Content.ReadAsStringAsync().Result;
+                    var logs = JsonConvert.DeserializeObject<ObservableCollection<StockLog>>(res2);
+                    StockLogs.Clear();
+                    foreach (StockLog log in logs)
+                    {
+                        StockLogs.Add(log);
+                    }
+
+            InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+    // NOTE: MUST CALL StateHasChanged() BECAUSE THIS IS TRIGGERED BY A TIMER INSTEAD OF A USER EVENT
+        }, new System.Threading.AutoResetEvent(false), 2000, 2000); // fire every 2000 milliseconds
+
+
+    }
+
+}

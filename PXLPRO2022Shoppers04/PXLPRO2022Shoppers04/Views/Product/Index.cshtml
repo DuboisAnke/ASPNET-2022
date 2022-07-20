@@ -1,0 +1,293 @@
+﻿@using PXLPRO2022Shoppers04.Models.Categories
+@using PXLPRO2022Shoppers04.Helpers
+@model PXLPRO2022Shoppers04.ViewModels.ProductsPageViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1 class="text-white bg-dark ml-5">@Model.ErrorMessage</h1>
+
+<section class="section-products">
+    <div class="container">
+        <div class="keyboardContainer">
+            <h1>Keyboards</h1>
+            <div class="row">
+                @foreach (var product in Model.GetAmountOfProductsOfCategory(nameof(Keyboard), 5))
+                {
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div id="product-1" class="single-product">
+                            @{
+                                var style = $"background-image: url({product.ImageLink.Replace('\\', '/')});";
+                            }
+                            <div class="part-1" style="@style">
+                                <ul>
+                                    <li>
+                                        @if (await APIHelper.GetStockOfProduct(product.SSN) != null && APIHelper.GetStockOfProduct(product.SSN).Result.Amount > 0)
+                                        {
+                                            <a asp-action="AddToCart" asp-route-id="@product.ProductId">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </a>
+                                        }
+                                    </li>
+                                    <li>
+                                        <a asp-action="Details" asp-route-id="@product.ProductId">
+                                            <i class="fas fa-expand"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="part-2 d-flex flex-column">
+                                <h3 class="product-title">@product.Name</h3>
+                                <h4 class="product-price">€ @product.Price</h4>
+                                <h4>[STOCK: <stock-amount SSN="@product.SSN"></stock-amount>]</h4>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="mouseContainer pt-5">
+            <h1>Mouses</h1>
+            <div class="row">
+                <!-- Single Product -->
+                @foreach (var product in Model.GetAmountOfProductsOfCategory(nameof(Mouse), 5))
+                {
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div id="product-1" class="single-product">
+                            @{
+                                var style = $"background-image: url({product.ImageLink.Replace('\\', '/')});";
+                            }
+                            <div class="part-1" style="@style">
+                                <ul>
+                                    <li>
+                                        <a asp-action="AddToCart" asp-route-id="@product.ProductId">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-action="Details" asp-route-id="@product.ProductId">
+                                            <i class="fas fa-expand"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="part-2 d-flex flex-column">
+                                <h3 class="product-title">@product.Name</h3>
+                                <h4 class="product-price">€ @product.Price</h4>
+                                <h4>[STOCK: <stock-amount SSN="@product.SSN"></stock-amount>]</h4>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="mousepadsContainer pt-5">
+            <h1>MousePads</h1>
+            <div class="row">
+                <!-- Single Product -->
+                @foreach (var product in Model.GetAmountOfProductsOfCategory(nameof(MousePad), 5))
+                {
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div id="product-1" class="single-product">
+                            @{
+                                var style = $"background-image: url({product.ImageLink.Replace('\\', '/')});";
+                            }
+                            <div class="part-1" style="@style">
+                                <ul>
+                                    <li>
+                                        <a asp-action="AddToCart" asp-route-id="@product.ProductId">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-action="Details" asp-route-id="@product.ProductId">
+                                            <i class="fas fa-expand"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="part-2 d-flex flex-column">
+                                <h3 class="product-title">@product.Name</h3>
+                                <h4 class="product-price">€ @product.Price</h4>
+                                <h4>[STOCK: <stock-amount SSN="@product.SSN"></stock-amount>]</h4>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<style scoped>
+    main {
+        background: black;
+    }
+
+    .container {
+        color: white;
+    }
+    .row {
+       text-align:center;
+    }
+    .card {
+        justify-content: space-around;
+        padding: 20px;
+    }
+
+    .body-card {
+        text-align: center;
+    }
+
+    body {
+        font-family: "Poppins", sans-serif;
+        color: #444444;
+    }
+
+    a,
+    a:hover {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .section-products {
+        padding: 80px 0 54px;
+    }
+
+        .section-products .header {
+            margin-bottom: 50px;
+        }
+
+            .section-products .header h3 {
+                font-size: 1rem;
+                color: #fe302f;
+                font-weight: 500;
+            }
+
+            .section-products .header h2 {
+                font-size: 2.2rem;
+                font-weight: 400;
+                color: #444444;
+            }
+
+        .section-products .single-product {
+            margin-bottom: 26px;
+        }
+
+            .section-products .single-product .part-1 {
+                position: relative;
+                height: 290px;
+                max-height: 290px;
+                margin-bottom: 20px;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column-reverse;
+            }
+
+                .section-products .single-product .part-1::before {
+                    position: absolute;
+                    content: "";
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: -1;
+                    transition: all 0.3s;
+                }
+
+    .part-1 {
+        transition: all 0.3s;
+    }
+
+        .part-1:hover {
+            transform: scale(1.1);
+        }
+
+
+
+    .section-products .single-product .part-1 .discount,
+    .section-products .single-product .part-1 .new {
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        color: #ffffff;
+        background-color: #fe302f;
+        padding: 2px 8px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+    }
+
+    .section-products .single-product .part-1 .new {
+        left: 0;
+        background-color: #444444;
+    }
+
+.section-products .single-product .part-1 ul {
+    margin: 0;
+    list-style: none;
+    opacity: 0;
+    transition: bottom 0.5s, opacity 0.5s;
+    padding: 20px;
+}
+
+    .part-1 {
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .section-products .single-product:hover .part-1 ul {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    .section-products .single-product .part-1 ul li {
+        display: inline-block;
+        margin-right: 4px;
+    }
+
+        .section-products .single-product .part-1 ul li a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            background-color: #ffffff;
+            color: #444444;
+            text-align: center;
+            box-shadow: 0 2px 20px rgb(50 50 50 / 10%);
+            transition: color 0.2s;
+        }
+
+            .section-products .single-product .part-1 ul li a:hover {
+                color: #917abc;
+            }
+
+    .section-products .single-product .part-2 .product-title {
+        font-size: 1rem;
+    }
+
+    .section-products .single-product .part-2 h4 {
+        display: inline-block;
+        font-size: 1rem;
+    }
+
+    .section-products .single-product .part-2 .product-old-price {
+        position: relative;
+        padding: 0 7px;
+        margin-right: 2px;
+        opacity: 0.6;
+    }
+
+        .section-products .single-product .part-2 .product-old-price::after {
+            position: absolute;
+            content: "";
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #444444;
+            transform: translateY(-50%);
+        }
+</style>

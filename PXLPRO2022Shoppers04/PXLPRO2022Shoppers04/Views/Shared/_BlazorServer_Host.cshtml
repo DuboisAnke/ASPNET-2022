@@ -1,0 +1,19 @@
+﻿@page "/"
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <base href="~/" />
+</head>
+<body>
+    <vc:navigation></vc:navigation>
+    <div class="m-2">
+        <component type="typeof(PXLPRO2022Shoppers04.Blazor.Manage.Routed)" render-mode="Server"/>
+    </div>
+    <script src="_framework/blazor.server.js"></script>
+</body>
+</html>

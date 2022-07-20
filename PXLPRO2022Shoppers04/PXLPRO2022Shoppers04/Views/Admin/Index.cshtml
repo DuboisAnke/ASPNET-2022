@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="adminPanelContainer">
+    <div>
+        <h1>Admin Panel</h1>
+    </div>
+    <div class="linkContainer">
+        <a href="/manage/products">All products</a>
+        <a href="/manage/stocklogs">All stocklogs</a>
+    </div>
+
+</div>
+
+<style scoped>
+    .adminPanelContainer {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        padding: 50px;
+        border-radius: 5px;
+        background: lightgray;
+        display: flex;
+        flex-direction: row;
+    }
+    .adminPanelContainer a {
+        text-decoration: none;
+    }
+    .linkContainer {
+        display: flex;
+        flex-direction: column;
+        padding: 0px;
+        margin-left: 40px;
+    }
+</style>

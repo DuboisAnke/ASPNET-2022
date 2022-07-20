@@ -1,0 +1,382 @@
+﻿@page "/manage/products/create"
+@using Microsoft.Extensions.DependencyInjection
+@using PXLPRO2022Shoppers04.Models.Categories
+@inherits OwningComponentBase
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+
+<div class="d-flex flex-column w-50 m-auto">
+    <br />
+    <br />
+    <br />
+    <EditForm Model="Keyboard" OnValidSubmit="HandleValidSubmitKeyboard" class="text-white p-5 edit-form">
+        <div class="form-group row dark-bg">
+            <h1 class="dark-bg">ADD KEYBOARD</h1>
+            <p>Not trying to add a keyboard? Scroll down for the other categories</p>
+            <br />
+            <br />
+            <label hidden>Category</label>
+            <select hidden @bind="Keyboard.CategoryId">
+
+                @foreach (var cat in ProductCategories)
+                {
+                    if (cat.Name.Equals("Keyboard"))
+                    {
+                        <option selected="selected" value="@cat.CategoryId">@cat.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@cat.CategoryId">@cat.Name</option>
+                    }
+
+                }
+
+            </select>
+            <ValidationMessage For="@(() => Keyboard.CategoryId)" />
+            @* <InputNumber class="form-control" @bind-Value="Product.CategoryId" />*@
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">NAME</label>
+            <ValidationMessage For="@(() => Keyboard.Name)" />
+            <InputText class="form-control" @bind-Value="Keyboard.Name" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">PRICE</label>
+            <ValidationMessage For="@(() => Keyboard.Price)" />
+            <InputNumber class="form-control" @bind-Value="Keyboard.Price" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">DESCRIPTION</label>
+            <ValidationMessage For="@(() => Keyboard.Description)" />
+            <InputTextArea class="form-control" @bind-Value="Keyboard.Description" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">LINK TO THE IMAGE</label>
+            <ValidationMessage For="@(() => Keyboard.ImageLink)" />
+            <InputText class="form-control" @bind-Value="Keyboard.ImageLink" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">BRAND</label>
+            <ValidationMessage For="@(() => Keyboard.Brand)" />
+            <InputText class="form-control" @bind-Value="Keyboard.Brand" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">COLOR</label>
+            <ValidationMessage For="@(() => Keyboard.Color)" />
+            <InputText class="form-control" @bind-Value="Keyboard.Color" />
+        </div>
+
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">LAYOUT</label>
+            <ValidationMessage For="@(() => Keyboard.Layout)" />
+            <InputText class="form-control" @bind-Value="Keyboard.Layout" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">SWITCH</label>
+            <ValidationMessage For="@(() => Keyboard.Switch)" />
+            <InputText class="form-control" @bind-Value="Keyboard.Switch" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">SIZE</label>
+            <ValidationMessage For="@(() => Keyboard.Size)" />
+            <InputText class="form-control" @bind-Value="Keyboard.Size" />
+        </div>
+        <br />
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">HAS RGB</label>
+            <ValidationMessage For="@(() => Keyboard.HasRGB)" />
+            <InputCheckbox @bind-Value="Keyboard.HasRGB" />
+        </div>
+        <br />
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">AMOUNT IN STOCK</label>
+            <InputNumber class="form-control" @bind-Value="StockKeyboard" />
+        </div>
+        <br />
+        <div class="form-group mx-sm-3 mb-2">
+            <div class="text-center d-flex w-100 mt-2 dark-bg">
+                <button type="submit" class="btn btn-primary w-50 m-auto submitbutton">Submit</button>
+            </div>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <div class="text-center d-flex w-100 mt-2 dark-bg">
+                <NavLink class="btn btn-secondary w-50 m-auto backbutton" href="/manage/products">Back</NavLink>
+            </div>
+        </div>
+    </EditForm>
+    <br />
+    <br />
+    <EditForm Model="MousePad" OnValidSubmit="HandleValidSubmitMousePad" class="bg-dark text-white p-5 edit-form">
+        <div class="form-group row dark-bg">
+            <h1 class="dark-bg">ADD MOUSEPAD</h1>
+            <br />
+            <br />
+            <label hidden>Category</label>
+            <select hidden @bind="MousePad.CategoryId">
+                @foreach (var cat in ProductCategories)
+                {
+                    if (cat.Name.Equals("MousePad"))
+                    {
+                        <option selected="selected" value="@cat.CategoryId">@cat.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@cat.CategoryId">@cat.Name</option>
+                    }
+                }
+            </select>
+            <ValidationMessage For="@(() => MousePad.CategoryId)" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">NAME</label>
+            <ValidationMessage For="@(() => MousePad.Name)" />
+            <InputText class="form-control" @bind-Value="MousePad.Name" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">PRICE</label>
+            <ValidationMessage For="@(() => MousePad.Price)" />
+            <InputNumber class="form-control" @bind-Value="MousePad.Price" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">DESCRIPTION</label>
+            <ValidationMessage For="@(() => MousePad.Description)" />
+            <InputTextArea class="form-control" @bind-Value="MousePad.Description" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">LINK TO THE IMAGE</label>
+            <ValidationMessage For="@(() => MousePad.ImageLink)" />
+            <InputText class="form-control" @bind-Value="MousePad.ImageLink" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">BRAND</label>
+            <ValidationMessage For="@(() => MousePad.Brand)" />
+            <InputText class="form-control" @bind-Value="MousePad.Brand" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">COLOR</label>
+            <ValidationMessage For="@(() => MousePad.Color)" />
+            <InputText class="form-control" @bind-Value="MousePad.Color" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">WIDTH IN MM</label>
+            <ValidationMessage For="@(() => MousePad.WidthInMM)" />
+            <InputNumber class="form-control" @bind-Value="MousePad.WidthInMM" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">DEPTH IN MM</label>
+            <ValidationMessage For="@(() => MousePad.WidthInMM)" />
+            <InputNumber class="form-control" @bind-Value="MousePad.DepthInMM" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">SURFACE</label>
+            <ValidationMessage For="@(() => MousePad.Surface)" />
+            <InputText class="form-control" @bind-Value="MousePad.Surface" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">MATERIAL</label>
+            <ValidationMessage For="@(() => MousePad.Material)" />
+            <InputText class="form-control" @bind-Value="MousePad.Material" />
+        </div>
+        <br />  
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">HAS RGB</label>
+            <ValidationMessage For="@(() => MousePad.HasRGB)" />
+            <InputCheckbox @bind-Value="MousePad.HasRGB" />
+        </div>
+        <br />
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">AMOUNT IN STOCK</label>
+            <InputNumber class="form-control" @bind-Value="StockMousePad" />
+        </div>
+        <br />
+        <div class="form-group mx-sm-3 mb-2">
+            <div class="text-center d-flex w-100 mt-2 dark-bg">
+                <button type="submit" class="btn btn-primary w-50 m-auto submitbutton">Submit</button>
+            </div>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <div class="text-center d-flex w-100 mt-2 dark-bg">
+                <NavLink class="btn btn-secondary w-50 m-auto backbutton" href="/manage/products">Back</NavLink>
+            </div>
+        </div>
+
+    </EditForm>
+    <br />
+    <br />
+    <EditForm Model="Mouse" OnValidSubmit="HandleValidSubmitMouse" class="bg-dark text-white p-5 edit-form">
+        <div class="form-group row dark-bg">
+            <h1 class="dark-bg">ADD MOUSE</h1>
+            <br />
+            <br />
+            <label hidden>Category</label>
+            <select hidden @bind="Mouse.CategoryId">
+                @foreach (var cat in ProductCategories)
+                {
+                    if (cat.Name.Equals("Mouse"))
+                    {
+                        <option selected="selected" value="@cat.CategoryId">@cat.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@cat.CategoryId">@cat.Name</option>
+                    }
+                }
+            </select>
+            <ValidationMessage For="@(() => Mouse.CategoryId)" />
+        </div>
+        <div class="form-group  mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">NAME</label>
+            <ValidationMessage For="@(() => Mouse.Name)" />
+            <InputText class="form-control" @bind-Value="Mouse.Name" />
+        </div>
+        <div class="form-group  mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">PRICE</label>
+            <ValidationMessage For="@(() => Mouse.Price)" />
+            <InputNumber class="form-control" @bind-Value="Mouse.Price" />
+        </div>
+        <div class="form-group  mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">DESCRIPTION</label>
+            <ValidationMessage For="@(() => Mouse.Description)" />
+            <InputTextArea class="form-control" @bind-Value="Mouse.Description" />
+        </div>
+        <div class="form-group  mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">LINK TO THE IMAGE</label>
+            <ValidationMessage For="@(() => Mouse.ImageLink)" />
+            <InputText class="form-control" @bind-Value="Mouse.ImageLink" />
+        </div>
+        <div class="form-group  mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">BRAND</label>
+            <ValidationMessage For="@(() => Mouse.Brand)" />
+            <InputText class="form-control" @bind-Value="Mouse.Brand" />
+        </div>
+        <div class="form-group  mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">COLOR</label>
+            <ValidationMessage For="@(() => Mouse.Color)" />
+            <InputText class="form-control" @bind-Value="Mouse.Color" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">DPI</label>
+            <ValidationMessage For="@(() => Mouse.DPI)" />
+            <InputNumber class="form-control" @bind-Value="Mouse.DPI" />
+        </div>
+        <br />
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">RIGHTHANDED</label>
+            <ValidationMessage For="@(() => Mouse.RightHanded)" />
+            <InputCheckbox @bind-Value="Mouse.RightHanded" />
+        </div>
+        <br />
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">HAS RGB</label>
+            <ValidationMessage For="@(() => Mouse.HasRGB)" />
+            <InputCheckbox @bind-Value="Mouse.HasRGB" />
+        </div>
+        <br />
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <label class="dark-bg">AMOUNT IN STOCK</label>
+            <InputNumber class="form-control" @bind-Value="StockMouse" />
+        </div>
+        <br />
+        <div class="form-group mx-sm-3 mb-2 dark-bg">
+            <div class="text-center d-flex w-100 mt-2 dark-bg">
+                <button type="submit" class="btn btn-primary w-50 m-auto submitbutton">Submit</button>
+            </div>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <div class="text-center d-flex w-100 mt-2 dark-bg">
+                <NavLink class="btn btn-secondary w-50 m-auto backbutton" href="/manage/products">Back</NavLink>
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+<style>
+
+    * {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+
+    .edit-form {
+        background-color: #252627;
+        border: 1px white solid;
+        border-radius: 5px;
+        box-shadow: 1px 1px 15px 5px #7289DA;
+    }
+
+    h1 {
+        margin-left: 25px;
+    }
+
+    p{
+        margin-left: 50px;
+    }
+
+    .dark-bg {
+        background-color: #252627;
+    }
+
+    .submitbutton {
+        width: 35px;
+        height: 35px;
+        outline: none;
+        border: none;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-color: #7289DA;
+    }
+
+</style>
+
+
+@code {
+    public IProduct ProductRepository => ScopedServices.GetService<IProduct>();
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    public Keyboard Keyboard { get; set; }
+    public Mouse Mouse { get; set; }
+    public MousePad MousePad { get; set; }
+    public Product Product { get; set; }
+    public int StockKeyboard { get; set; }
+    public int StockMouse { get; set; }
+    public int StockMousePad { get; set; }
+
+    public List<ProductCategory> ProductCategories { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ProductCategories = ProductRepository.ProductCategories();
+        Product = new Product();
+        Keyboard = new Keyboard();
+        Mouse = new Mouse();
+        MousePad = new MousePad();
+        Keyboard.CategoryId = ProductCategories.FirstOrDefault(x => x.Name == nameof(Keyboard)).CategoryId;
+
+        Mouse.CategoryId = ProductCategories.FirstOrDefault(x => x.Name == nameof(Mouse)).CategoryId;
+
+        MousePad.CategoryId = ProductCategories.FirstOrDefault(x => x.Name == nameof(MousePad)).CategoryId;
+
+
+    }
+
+    public void HandleValidSubmitKeyboard()
+    {
+        ProductRepository.AddKeyboard(Keyboard, StockKeyboard);
+        NavigationManager.NavigateTo("/manage/products");
+    }
+    public void HandleValidSubmitMouse()
+    {
+        ProductRepository.AddMouse(Mouse, StockMouse);
+        NavigationManager.NavigateTo("/manage/products");
+    }
+
+    public void HandleValidSubmitMousePad()
+    {
+        ProductRepository.AddMousePad(MousePad, StockMousePad);
+        NavigationManager.NavigateTo("/manage/products");
+    }
+}
+

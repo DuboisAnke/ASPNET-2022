@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using PXLPRO2022Shoppers04.Helpers
+@inject SignInManager<IdentityUser> _signInManager
+@inject UserManager<IdentityUser> _userManager;
+
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <img style="width: 100px;" src="~/assets/logo_webshop-transp.png" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse justify-content-end">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Product" asp-action="Index">Products</a>
+                    </li>
+                    @if (_signInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="ShoppingCart" asp-action="Index">
+                                <i class="fa-solid fa-cart-shopping"></i><cart-items-count user="User" class="ml-1"></cart-items-count>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa-solid fa-user"></i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Client" asp-action="Index">Profile</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Order" asp-action="Index">Orders<amount-of-orders class="ml-1" user="User"></amount-of-orders></a>
+                                    @if (User.IsInRole(RoleHelper.AdminRole))   
+                                    {
+                                         <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Index">Admin Panel</a>  
+                                    }
+                                 
+                                    <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<style scoped>
+    header, footer {
+        background-color: black;
+        color: white !important;
+    }
+
+    .nav-item a, .navbar-brand {
+        color: white;
+    }
+
+        .nav-item a:hover {
+            color: white;
+        }
+
+    .dropdown-item {
+        color: black !important;
+    }
+</style>

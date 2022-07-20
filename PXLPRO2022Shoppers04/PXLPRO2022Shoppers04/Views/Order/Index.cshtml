@@ -1,0 +1,132 @@
+﻿@model PXLPRO2022Shoppers04.ViewModels.AllOrdersViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+@if (Model.Orders.Any())
+{
+    <h1 class="pt-2">Your orders</h1>
+    <div class="emp-order mt-5">
+
+        <table class="table table-dark">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        Ordernr
+                    </th>
+                    <th>
+
+        </th>
+        <th>
+            Products
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            State
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            Total
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+        <tbody>
+            @foreach (var item in Enumerable.Reverse(Model.Orders).ToList())
+            {
+                <tr class="tablerow">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderId)
+                    </td>
+                    <td>
+                        @{
+                            List<OrderLine> products = new List<OrderLine>();
+                            Product product = new Product();
+                            if (Model.OrderLines != null)
+                            {
+                                product = Model.OrderLines.Find(x => x.OrderId == item.OrderId)?.Product;
+                                products = new List<OrderLine>(Model.OrderLines.Where(x => x.OrderId == item.OrderId));
+                            }
+                        }
+                        <a asp-action="Details" asp-controller="Product" asp-route-id="@product!.ProductId">
+                            <img src="@product.ImageLink">
+                        </a>
+
+                    </td>
+                    <td>
+                        @foreach (var orderfromOrderLine in @products)
+                        {
+                            string productline = $"{orderfromOrderLine.Quantity}x {orderfromOrderLine.Product.Name}";
+                            <a asp-action="Details" asp-controller="Product" asp-route-id="@orderfromOrderLine.ProductId">@productline ---> €<calc-price price="@orderfromOrderLine.Product.Price" quantity="orderfromOrderLine.Quantity"></calc-price><br/></a>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderState)
+                    </td>
+                    <td>
+                        @item.Address.FullAddress
+                    </td>
+                    <td>
+                        €<calc-total-price-for-order items="products"></calc-total-price-for-order>
+                    </td>
+                    <td>
+                        <a asp-action="DownloadOrderPDF" asp-route-orderId="@item.OrderId">Download PDF</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+}
+else
+{
+    <h1 class="pt-2">You don't have any orders yet.</h1>
+}
+
+<style scoped>
+    img {
+        width: 150px;
+    }
+
+    h1 {
+        color: white;
+        text-align: center;
+    }
+
+    .emp-order {
+        width: 75%;
+        margin: auto;
+        margin-bottom: 150px;
+        border-radius: 5px;
+        border: 1px solid #7289DA;
+        background: #fff;
+    }
+
+    .table {
+        border-radius: 5px;
+        margin: 0;
+    }
+
+    thead, th, td {
+        border-radius: 5px;
+    }
+
+    a {
+        color: #CBC3E3;
+    }
+
+    body {
+        background: url(https://ak.picdn.net/shutterstock/videos/19451212/thumb/1.jpg?ip=x480);
+    }
+
+</style>

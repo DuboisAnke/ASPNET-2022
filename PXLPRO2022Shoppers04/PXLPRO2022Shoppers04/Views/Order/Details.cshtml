@@ -1,0 +1,322 @@
+﻿@model PXLPRO2022Shoppers04.ViewModels.ClientInfoOrderViewModel;
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<main class="page">
+    <section class="shopping-cart dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="font-weight-bold">CONFIRM ORDER</h2>
+            </div>
+            <div class="content">
+                <div class="row">
+                    <div class="w-100">
+                        <div class="items w-100">
+                            @if (Model != null)
+                            {
+                                @foreach (var product in Model.CartItems)
+                                {
+                                    <div class="product">
+                                        <div class="row">
+                                            <div class="col-md-2 mt-auto mb-auto">
+                                                <img class="img-fluid mx-auto d-block image" src="@product.Product.ImageLink">
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div class="info">
+                                                    <div class="row">
+                                                        <div class="col-md-5 product-name">
+                                                            <div class="product-name">
+                                                                <a asp-action="Details" asp-controller="Product" asp-route-id="@product.Product.ProductId">@product.Product.Name</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 quantity">
+                                                            <label for="quantity">Quantity:</label>
+                                                            <input disabled value="@product.Quantity" class="form-control quantity-input">
+                                                        </div>
+                                                        <div class="col-md-3 price">
+                                                            <span>€ <calc-price price="@product.Product.Price" quantity="@product.Quantity"></calc-price></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="w-100 pt-3">
+                        <dt>
+                            Naam
+                        </dt>
+                        <dd>
+                            @Model.Client.FullName.ToString()
+                        </dd>
+                        @if (!@Model!.Client.Addresses.Any())
+                        {
+                            <form asp-controller="Address" asp-action="CreateAddressFromOrdering" style="width: 90%;">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label asp-for="@Model.Address.StreetName" class="control-label"></label>
+                                    <input asp-for="@Model.Address.StreetName" class="form-control" />
+                                    <span asp-validation-for="@Model.Address.StreetName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="@Model.Address.HouseNumber" class="control-label"></label>
+                                    <input asp-for="@Model.Address.HouseNumber" class="form-control" />
+                                    <span asp-validation-for="@Model.Address.HouseNumber" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="@Model.Address.ZIP" class="control-label"></label>
+                                    <input asp-for="@Model.Address.ZIP" class="form-control" />
+                                    <span asp-validation-for="@Model.Address.ZIP" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="@Model.Address.City" class="control-label"></label>
+                                    <input asp-for="@Model.Address.City" class="form-control" />
+                                    <span asp-validation-for="@Model.Address.City" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="@Model.Address.Country" class="control-label"></label>
+                                    <input asp-for="@Model.Address.Country" class="form-control" />
+                                    <span asp-validation-for="@Model.Address.Country" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Add address" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        }
+                    </div>
+                    <form asp-action="Create" method="post" class="w-100 formstyle">
+                        @if (@Model.Client.Addresses.Any())
+                        {
+                            
+                            <label class="font-weight-bold"> Pick an address </label>
+                            <select asp-for="AddressId" class="form-control" asp-items="ViewBag.AddressList"></select>
+                        }
+                         <div>
+                        <div class="summary mt-3">
+                            <h3>Summary</h3>
+                            <div class="summary-item">
+                                <span class="text">Total</span><span class="price">€ <calc-total-price-for-cart items="@Model.CartItems"></calc-total-price-for-cart></span>
+                            </div>
+                            <input type="submit" class="btn cart-nav-btn mt-3" value="Checkout" />
+                        </div>
+                    </div>
+                    </form>
+                   
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+
+
+<style scoped>
+
+
+    body {
+        background: url(https://ak.picdn.net/shutterstock/videos/19451212/thumb/1.jpg?ip=x480);
+    }
+
+
+
+        .shopping-cart.dark {
+            background: url(https://ak.picdn.net/shutterstock/videos/19451212/thumb/1.jpg?ip=x480);
+        }
+
+
+    .cart-nav-btn {
+        border: none;
+        border-radius: 1.5rem;
+        width: 25%;
+        margin-left: 35%;
+        padding: 1%;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        background: black;
+    }
+    
+    .form {
+            width: 100%
+        }
+    
+        .formstyle {
+            margin-right: 35px;
+        }
+    
+        body {
+            background: url(https://ak.picdn.net/shutterstock/videos/19451212/thumb/1.jpg?ip=x480);
+        }
+    
+        .shopping-cart {
+            padding-bottom: 50px;
+            font-family: 'Montserrat', sans-serif;
+            padding: 3%;
+            margin-top: 3%;
+            margin-bottom: 5%;
+            margin-left: 15%;
+            margin-right: 15%;
+            border-radius: 0.5rem;
+            background: #fff;
+            
+        }
+    
+            .shopping-cart.dark {
+                background: url(https://ak.picdn.net/shutterstock/videos/19451212/thumb/1.jpg?ip=x480);
+            }
+    
+            .shopping-cart .content {
+                box-shadow: 0px 2px 10px rgb(0 0 0 / 8%);
+                background-color: white;
+                padding-left: 28px;
+                padding-bottom: 30px;
+                border-radius: 5px;
+                border-radius: 9px;
+            }
+    
+            .shopping-cart .block-heading {
+                margin-bottom: 40px;
+                text-align: center;
+            }
+    
+                .shopping-cart .block-heading p {
+                    text-align: center;
+                    max-width: 420px;
+                    margin: auto;
+                    opacity: 0.7;
+                }
+    
+            .shopping-cart .dark .block-heading p {
+                opacity: 0.8;
+            }
+    
+            .shopping-cart .block-heading h1,
+            .shopping-cart .block-heading h2,
+            .shopping-cart .block-heading h3 {
+                margin-bottom: 1.2rem;
+                color: white;
+            }
+    
+            .shopping-cart .items {
+                margin: auto;
+            }
+    
+                .shopping-cart .items .product {
+                    margin-bottom: 20px;
+                    padding-top: 20px;
+                    padding-bottom: 20px;
+                }
+    
+                    .shopping-cart .items .product .info {
+                        padding-top: 0px;
+                        text-align: center;
+                    }
+    
+                        .shopping-cart .items .product .info .product-name {
+                            font-weight: 600;
+                            margin: auto;
+                        }
+    
+        .shopping-cart .items .product .info .product-name .product-info {
+            font-size: 14px;
+            margin-top: 15px;
+        }
+    
+        .shopping-cart .items .product .info .product-name .product-info .value {
+            font-weight: 400;
+        }
+    
+        .shopping-cart .items .product .info .quantity .quantity-title{
+            margin-top: 25px;
+        }
+    
+        .shopping-cart .items .product .info .quantity .quantity-input {
+            
+            width: 80px;
+            margin: auto;
+        }
+    
+        .shopping-cart .items .product .info .price {
+             margin: auto;
+            font-weight: bold;
+            font-size: 22px;
+        }
+    
+        .shopping-cart .summary {
+            border-top: 2px solid #917abc;
+            background-color: #FAF6FF;
+            height: 100%;
+            padding: 30px;
+            padding-top:5px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+    
+            .shopping-cart .summary h3 {
+                font-size: 1.3em;
+                font-weight: 600;
+                padding-top: 20px;
+                padding-bottom: 20px;           
+            }
+    
+            .shopping-cart .summary .summary-item:not(:last-of-type) {
+                padding-bottom: 10px;
+                padding-top: 10px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+    
+            .shopping-cart .summary .text {
+                font-size: 1em;
+                font-weight: 600;
+            }
+    
+            .shopping-cart .summary .price {
+                font-size: 1em;
+                margin-left: 20px;
+            }
+    
+            .shopping-cart .summary button {
+                margin-top: 20px;
+            }
+    
+        .changeQuantitySubmitBtn {
+            width: 35px;
+            height: 35px;
+            outline: none;
+            border: none;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-image: url("https://img.myloview.cz/plakaty/check-mark-check-list-icon-vector-design-template-400-222428279.jpg");
+        }
+    
+        .removeBtn {
+            justify-content: start;
+            display: flex;
+            margin-top: 5px;
+            font-size: 13px;
+            width: 80px;
+        }
+    
+        .product-name {
+            textcolor: black;
+        }
+    
+        .cart-nav-btn {
+            border: none;
+            border-radius: 1.5rem;
+            width: 25%;
+            margin-left: 35%;
+            padding: 1%;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            background: black;
+        }
+</style>
+
